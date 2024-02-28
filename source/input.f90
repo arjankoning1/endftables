@@ -44,7 +44,7 @@ subroutine input
   endif
   source = 'ENDF'
   user = 'Arjan Koning'
-  oformat = 'YANDF-0.1'
+  oformat = 'YANDF-0.2'
   open (unit=5,file=infile)
 !
 ! Read input

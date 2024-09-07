@@ -83,7 +83,7 @@ subroutine readMF1(line,Nlines,MT)
     ACN = Atarget + parA(k0)
     if (lib(1:1).eq.' ') then
       lib='evl'
-      if (libf(1:6) == 'ENDF/B') lib='endfb8.0'
+      if (libf(1:6) == 'ENDF/B') lib='endfb8.1'
       if (libf(1:7) == 'JENDL-4') lib='jendl4.0'
       if (libf(1:8) == 'JENDL-HE') lib='jendl.he'
       if (libf(1:7) == 'CENDL-3') lib='cendl3.1'

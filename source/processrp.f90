@@ -113,7 +113,7 @@ subroutine processrp(k)
         do nen = 1, N
           EE = Eres(nen)
           if (EE == Eres(nen+1)) EE =max(EE - 1.e-5, 1.e-11)
-          call locate(Em, 0, Nxsmt(kk), EE, j)
+          call locate(Emm, 0, Nxsmt(kk), EE, j)
           Ea = Emm(j)
           Eb = Emm(j+1)
           Ya = xsmm(j)

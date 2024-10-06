@@ -22,7 +22,7 @@ subroutine MTinitial(MT)
 !
 ! *** Initialization
 !
-  oformat='YANDF-0.1'
+  oformat='YANDF-0.2'
   mass='000'
   write(mass(1:3),'(i3.3)') Atarget
   endfhead = proj//'-'//trim(El)//mass

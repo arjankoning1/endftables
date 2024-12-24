@@ -43,10 +43,10 @@ To install ENDFTABLES, you can use one of the following options:
 cd endftables/source
 make
 ```
-#### 2. Using the Install_endftables.bash script:
+#### 2. Using the install_endftables.bash script:
 ```
 cd endftables
-Install_endftables.bash 
+install_endftables.bash 
 ```
 
 The above will produce a *endftables* executable in the *endftables/bin* directory.

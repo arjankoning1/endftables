@@ -1,6 +1,6 @@
 
 # ENDFTABLES
-ENDFTABLES is a software package for the processing ENDF-6 format nuclear data libraries into x-y tables, with one file per reaction channel.
+ENDFTABLES is a software package for the processing ENDF-6 format nuclear data libraries into x-y(-dy) tables, with one file per reaction channel.
 
 ## Documentation and reference
 A description of the code and its options can be found in the [ENDFTABLES tutorial (pdf)](https://github.com/arjankoning1/endftables/blob/main/doc/tools.pdf).
@@ -19,13 +19,13 @@ The following are the prerequisites for compiling ENDFTABLES:
 ### Downloads:
 
 To download ENDFTABLES, you can use one of the following options:
-#### 1. Download the tar file:
+#### 1. Download the tar file (frozen version):
 ```
 https://nds.iaea.org/talys/endftables.tar
 tar zxf endftables.tar
 ```
 
-#### 2. Using git:
+#### 2. Using git (latest beta version):
 ```
 git clone https://github.com/arjankoning1/endftables.git
 ```
@@ -43,14 +43,14 @@ To install ENDFTABLES, you can use one of the following options:
 cd endftables/source
 make
 ```
-#### 2. Using the code_build script:
+#### 2. Using the Install_endftables.bash script:
 ```
 cd endftables
-code_build endftables
+Install_endftables.bash 
 ```
 
 The above will produce a *endftables* executable in the *endftables/bin* directory.
-The compiler and its flags can be set in either the *source/Makefile* or in *code_build*.
+The compiler and its flags can be set in either the *source/Makefile* or in *code_build.bash*.
 
 ## Sample cases
 
@@ -66,7 +66,7 @@ The *endftables/* directory contains the following directories and files:
 
 + `README.md` is this README file
 + `LICENSE` is the License file
-+ `code_build` is an installation script
++ `install_endftables.bash` and `code_build.bash` are installation scripts
 + `source/` contains the Fortran source code of ENDFTABLES and the Makefile
 + `bin/` contains the executable after successful installation
 + `doc/` contains the tutorial in pdf format

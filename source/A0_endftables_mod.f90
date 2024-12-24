@@ -5,7 +5,7 @@ module endftables_mod
 !
 ! Revision    Date      Author           Description
 ! ====================================================
-!    1     2023-12-29   A.J. Koning      Original code
+!    1     2024-12-29   A.J. Koning      Original code
 !-----------------------------------------------------------------------------------------------------------------------------------
 !
   implicit none

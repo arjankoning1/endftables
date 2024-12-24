@@ -5,7 +5,7 @@ program endftables
 !
 ! Revision    Date      Author           Description
 ! ====================================================
-!    1     2023-12-29   A.J. Koning      Original code
+!    1     2024-12-29   A.J. Koning      Original code
 !-----------------------------------------------------------------------------------------------------------------------------------
 !
 !   |-------------------------------------------------------|
@@ -16,7 +16,7 @@ program endftables
 !
 ! MIT License
 !
-! Copyright (c) 2023 Arjan Koning
+! Copyright (c) 2024 Arjan Koning
 !
 ! Permission is hereby granted, free of charge, to any person obtaining a copy
 ! of this software and associated documentation files (the "Software"), to deal

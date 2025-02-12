@@ -76,6 +76,7 @@ subroutine processMF6(MT)
       Z=min(Z,numZ)
       A=min(A,numA)
       Nisorp(Z,A)=max(Nisorp(Z,A),LIP(MT,k))
+      Nisorp(Z,A)=min(Nisorp(Z,A),numiso)
       Zres(k)=Z
       Ares(k)=A
       Nres(k)=A-Z
@@ -180,6 +181,7 @@ subroutine processMF6(MT)
               rpix(k,kk) = imt
               if (imt == 4 .or. imt == 16 .or. imt == 17 .or. imt == 37 .or. imt == 102 .or. imt == 103) MTix(imt,iso) = k
               Nisom(imt) = max(Nisom(imt),iso)
+              Nisom(imt) = min(Nisom(imt),numiso)
               mfmtexist(3,imt)=.true.
               MTexist(imt)=.true.
             endif

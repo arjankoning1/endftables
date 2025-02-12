@@ -42,7 +42,7 @@ subroutine readMF3(line,Nlines,MF,MT)
     n=1
     read(line(n)(45:55), '(i11)') NSt
   endif
-  Niso=NSt-1
+  Niso=min(NSt-1,numiso)
   n=2
   do L=Lbeg,Niso
     read(line(n)(12:22), '(e11.6)') Q3(L)

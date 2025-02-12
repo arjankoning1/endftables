@@ -40,6 +40,7 @@ subroutine processMF3(MT)
 ! *** Process MF3: Add high-energy data
 !
   Niso = max(Niso,Nisom(MT))
+  Niso = min(Niso,numiso)
   E = E3 
   QI = Q3 * 1.e-6
   xs = xs3 

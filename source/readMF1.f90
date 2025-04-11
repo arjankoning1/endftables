@@ -88,7 +88,7 @@ subroutine readMF1(line,Nlines,MT)
       if (libf(1:8) == 'JENDL-HE') lib='jendl.he'
       if (libf(1:7) == 'CENDL-3') lib='cendl3.1'
       if (libf(1:5) == 'KAERI') lib='kaeri.g1'
-      if (libf(1:3) == 'JEF') lib='jeff3.3'
+      if (libf(1:3) == 'JEF') lib='jeff4.0'
       if (libf(1:8) == 'EAF-2010') lib='eaf.2010'
       if (libf(1:4) == 'IRDF') lib='irdff2.0'
       if (libf(1:3) == 'FEI') lib='irdff2.0'

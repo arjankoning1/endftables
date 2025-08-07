@@ -10,7 +10,7 @@ subroutine integralxs(MT)
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -34,6 +34,8 @@ subroutine integralxs(MT)
   integer            :: Ncol
   integer            :: nen 
   integer            :: nen0
+  integer            :: indent
+  integer            :: id2
   real(sgl)          :: Ea1
   real(sgl)          :: Eb1
   real(sgl)          :: xsa
@@ -50,6 +52,8 @@ subroutine integralxs(MT)
 !
 ! *************** Exclude SACS for discrete levels **
 !
+  indent = 0
+  id2 = indent + 2
   MF = 3
   if (MT >= 50 .and. MT <= 91) return
   if (MT >= 600 .and. MT <= 849) return
@@ -134,12 +138,13 @@ subroutine integralxs(MT)
       Ncol=3
     endif
     open (unit = 1, status = 'unknown', file = endffile)
-    call write_header(topline,source,user,date,oformat)
-    call write_endf(2,library,author,year)
-    call write_target
-    call write_reaction(reaction,0.D0,0.D0,MF,MT)
-    if ( MT > 3 .and. Z > 0) call write_residual(Z,A,finalnuclide)
-    call write_datablock(quantity,Ncol,Nspectrum,col,un)
+    call write_header(indent,topline,source,user,date,oformat)
+    call write_endf(id2,library,author,year)
+    call write_target(indent)
+    call write_reaction(indent,reaction,0.D0,0.D0,MF,MT)
+    if ( MT > 3 .and. Z > 0) call write_residual(id2,Z,A,finalnuclide)
+    call write_quantity(indent,quantity)
+    call write_datablock(indent,Ncol,Nspectrum,col,un)
     if (covexist) then
       do i = 1, Nspectrum
         write(1, '(a30, 3es15.6)') spectrum(i), sacs(i), sacslow(i), sacsupp(i)

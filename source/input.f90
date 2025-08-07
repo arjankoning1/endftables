@@ -10,7 +10,7 @@ subroutine input
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -44,7 +44,7 @@ subroutine input
   endif
   source = 'ENDF'
   user = 'Arjan Koning'
-  oformat = 'YANDF-0.2'
+  oformat = 'YANDF-0.4'
   open (unit=5,file=infile)
 !
 ! Read input

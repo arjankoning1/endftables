@@ -10,7 +10,7 @@ subroutine writeang(MT)
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -28,10 +28,14 @@ subroutine writeang(MT)
   integer            :: nen
   integer            :: iang 
   integer            :: Ncol 
+  integer            :: indent 
+  integer            :: id2 
   real               :: EE
 !
 ! *** Write angular distributions
 !
+  indent = 0
+  id2 = indent + 2
   MF = 4
   Ncol=2
   col(1)='Angle'
@@ -54,12 +58,13 @@ subroutine writeang(MT)
     quantity='angular distribution'
     reaction=MTreac(MT,-1)
     topline=trim(targetnuclide)//trim(reaction)//' '//trim(quantity)//' at '//Estr//' MeV'
-    call write_header(topline,source,user,date,oformat)
-    call write_endf(2,library,author,year)
-    call write_target
-    call write_reaction(reaction,0.D0,0.D0,MF,MT)
-    call write_real(2,'E-incident [MeV]',EE)
-    call write_datablock(quantity,Ncol,181,col,un)
+    call write_header(indent,topline,source,user,date,oformat)
+    call write_endf(id2,library,author,year)
+    call write_target(indent)
+    call write_reaction(indent,reaction,0.D0,0.D0,MF,MT)
+    call write_real(id2,'E-incident [MeV]',EE)
+    call write_quantity(indent,quantity)
+    call write_datablock(indent,Ncol,181,col,un)
     do iang=0,180
       write(1, '(2es15.6)') real(iang), angdis(nen,iang)
     enddo

@@ -10,7 +10,7 @@ subroutine writexs(MT)
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -32,9 +32,15 @@ subroutine writexs(MT)
   integer            :: LL
   integer            :: k 
   integer            :: Ncol
+  integer            :: indent
+  integer            :: id2
+  integer            :: id4
 !
 ! *** Write cross sections
 !
+  indent = 0
+  id2 = indent + 2
+  id4 = indent + 4
   un = 'mb'
   col(1)='E'
   un(1)='MeV'
@@ -66,20 +72,21 @@ subroutine writexs(MT)
     reaction=MTreac(MT,LL)
     topline=trim(targetnuclide)//trim(reaction)//trim(finalnuclide)//' '//trim(quantity)
     open (unit = 1, status = 'unknown', file = endffile)
-    call write_header(topline,source,user,date,oformat)
-    call write_endf(2,library,author,year)
-    call write_target
-    call write_reaction(reaction,dble(QI(L)),dble(E(L,1)),MF,MT)
+    call write_header(indent,topline,source,user,date,oformat)
+    call write_endf(id2,library,author,year)
+    call write_target(indent)
+    call write_reaction(indent,reaction,dble(QI(L)),dble(E(L,1)),MF,MT)
     if (Z > 0 .and. MT > 3 .and. .not.flagfission) then
-      call write_residual(Z,A,finalnuclide)
-      if (L /= -1) call write_level(2,L,-1,0.,-1.,0,0.)
+      call write_residual(id2,Z,A,finalnuclide)
+      if (L /= -1) call write_level(id4,L,-1,0.,-1.,0,0.)
     endif
     if (covexist) then
       Ncol=4
     else
       Ncol=2
     endif
-    call write_datablock(quantity,Ncol,Nxs(L),col,un)
+    call write_quantity(id2,quantity)
+    call write_datablock(id2,Ncol,Nxs(L),col,un)
     if (covexist) then
       do k = 1, Nxs(L)
         write(1, '(4es15.6)') E(L,k), xs(L,k), xslow(L,k), xsupp(L,k)

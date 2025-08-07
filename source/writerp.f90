@@ -10,7 +10,7 @@ subroutine writerp(k)
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -32,9 +32,15 @@ subroutine writerp(k)
   integer            :: Ncol
   integer            :: iso
   integer            :: nen
+  integer            :: indent
+  integer            :: id2
+  integer            :: id4
 !
 ! *** Write cross sections
 !
+  indent = 0
+  id2 = indent + 2
+  id4 = indent + 4
   MF = 6
   MT = 5
   Z = Zres(k)
@@ -62,13 +68,14 @@ subroutine writerp(k)
   un(2)='mb'
   Ncol=2
   open (unit = 1, status = 'unknown', file = endffile)
-  call write_header(topline,source,user,date,oformat)
-  call write_endf(2,library,author,year)
-  call write_target
-  call write_reaction(reaction,0.D0,0.D0,MF,MT)
-  call write_residual(Z,A,finalnuclide)
-  if (iso /= -1) call write_level(2,iso,-1,0.,-1.,0,0.)
-  call write_datablock(quantity,Ncol,Nresi,col,un)
+  call write_header(indent,topline,source,user,date,oformat)
+  call write_endf(id2,library,author,year)
+  call write_target(indent)
+  call write_reaction(indent,reaction,0.D0,0.D0,MF,MT)
+  call write_residual(id2,Z,A,finalnuclide)
+  if (iso /= -1) call write_level(id4,iso,-1,0.,-1.,0,0.)
+  call write_quantity(id2,quantity)
+  call write_datablock(id2,Ncol,Nresi,col,un)
   do nen = 1, Nresi
     write(1, '(2es15.6)') Eres(nen), xsres(nen)
   enddo

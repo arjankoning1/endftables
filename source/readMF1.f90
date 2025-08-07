@@ -10,7 +10,7 @@ subroutine readMF1(line,Nlines,MT)
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -92,7 +92,7 @@ subroutine readMF1(line,Nlines,MT)
       if (libf(1:8) == 'EAF-2010') lib='eaf.2010'
       if (libf(1:4) == 'IRDF') lib='irdff2.0'
       if (libf(1:3) == 'FEI') lib='irdff2.0'
-      if (libf(1:5) == 'TENDL') lib='tendl.2023'
+      if (libf(1:5) == 'TENDL') lib='tendl.2025'
     endif
     EMAX=EMAX*1.e-6
   endif

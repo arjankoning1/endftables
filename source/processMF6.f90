@@ -10,7 +10,7 @@ subroutine processMF6(MT)
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -147,7 +147,8 @@ subroutine processMF6(MT)
               Eb = Ee6(j+1)
               Ya = xs6(j)
               Yb = xs6(j+1)
-              call pol1(Ea, Eb, Ya, Yb, Ee, Y)
+!             call pol1(Ea, Eb, Ya, Yb, Ee, Y)
+              call pol1(Ea, Eb, Ya, Yb, Eiso(nen2), Y)
               xsiso(nen2) = Y6(kb,nen2) * Y
             enddo
             Eiso(0)=0.

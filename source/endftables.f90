@@ -5,7 +5,7 @@ program endftables
 !
 ! Revision    Date      Author           Description
 ! ====================================================
-!    1     2024-12-29   A.J. Koning      Original code
+!    1     2025-08-01   A.J. Koning      Original code
 !-----------------------------------------------------------------------------------------------------------------------------------
 !
 !   |-------------------------------------------------------|
@@ -36,7 +36,7 @@ program endftables
 ! OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ! SOFTWARE.
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !

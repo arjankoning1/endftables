@@ -10,7 +10,7 @@ subroutine writenu(MT)
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -27,9 +27,13 @@ subroutine writenu(MT)
   integer            :: nutype 
   integer            :: k 
   integer            :: Ncol
+  integer            :: indent
+  integer            :: id2
 !
 ! *** Write nubar
 !
+  indent = 0
+  id2 = indent + 2
   MF = 1
   col(1)='E'
   un(1)='MeV'
@@ -54,11 +58,12 @@ subroutine writenu(MT)
   topline=trim(targetnuclide)//trim(reaction)//' '//trim(quantity)
   open (unit = 1, status = 'unknown', file = endffile)
   if (MT <= 456) then
-    call write_header(topline,source,user,date,oformat)
-    call write_endf(2,library,author,year)
-    call write_target
-    call write_reaction(reaction,0.D0,0.D0,MF,MT)
-    call write_datablock(quantity,Ncol,Nnubar(nutype),col,un)
+    call write_header(indent,topline,source,user,date,oformat)
+    call write_endf(id2,library,author,year)
+    call write_target(indent)
+    call write_reaction(indent,reaction,0.D0,0.D0,MF,MT)
+    call write_quantity(indent,quantity)
+    call write_datablock(indent,Ncol,Nnubar(nutype),col,un)
     do k = 1, Nnubar(nutype)
       write(1, '(2es15.6)') Enubar(nutype,k), nubar(nutype,k)
     enddo
@@ -66,27 +71,27 @@ subroutine writenu(MT)
   if (MT == 458) then
     quantity='Fission energy release'
     topline=trim(targetnuclide)//trim(reaction)//' '//trim(quantity)
-    call write_header(topline,source,user,date,oformat)
-    call write_endf(2,library,author,year)
-    call write_target
-    call write_reaction(reaction,0.D0,0.D0,MF,MT)
-    write(1,'("# observables:")')
-    call write_real(2,'EFR - kinetic energy of fragments [eV]',EFR)
-    call write_real(2,'DEFR - kinetic energy of fragments uncertainty [eV]',DEFR)
-    call write_real(2,'ENP - kinetic energy of prompt neutrons [eV]',ENP)
-    call write_real(2,'DENP - kinetic energy of prompt neutons uncertainty [eV]',DENP)
-    call write_real(2,'END - kinetic energy of delayed neutrons [eV]',END1)
-    call write_real(2,'DEND - kinetic energy of delayed neutrons uncertainty [eV]',DEND)
-    call write_real(2,'EGP - total energy of prompt gamma rays [eV]',EGP)
-    call write_real(2,'DEGP - total energy of prompt gamma rays uncertainty [eV]',DEGP)
-    call write_real(2,'EGD - total energy of delayed gamma rays [eV]',EGD)
-    call write_real(2,'DEGD - total energy of delayed gamma rays uncertainty [eV]',DEGD)
-    call write_real(2,'EBDEL - total energy of delayed betas [eV]',EBDEL)
-    call write_real(2,'DEBDEL - total energy of delayed betas uncertainty [eV]',DEBDEL)
-    call write_real(2,'ENU - total energy of neutrinos [eV]',ENU)
-    call write_real(2,'DENU - total energy of neutrinos uncertainty [eV]',DENU)
-    call write_real(2,'ERN - total energy - energy of neutrinos [eV]',ERN)
-    call write_real(2,'DERN - total energy - energy of neutrinos uncertainty [eV]',DERN)
+    call write_header(indent,topline,source,user,date,oformat)
+    call write_endf(id2,library,author,year)
+    call write_target(indent)
+    call write_reaction(indent,reaction,0.D0,0.D0,MF,MT)
+    call write_char(id2,'observables','')
+    call write_real(id2,'EFR - kinetic energy of fragments [eV]',EFR)
+    call write_real(id2,'DEFR - kinetic energy of fragments uncertainty [eV]',DEFR)
+    call write_real(id2,'ENP - kinetic energy of prompt neutrons [eV]',ENP)
+    call write_real(id2,'DENP - kinetic energy of prompt neutons uncertainty [eV]',DENP)
+    call write_real(id2,'END - kinetic energy of delayed neutrons [eV]',END1)
+    call write_real(id2,'DEND - kinetic energy of delayed neutrons uncertainty [eV]',DEND)
+    call write_real(id2,'EGP - total energy of prompt gamma rays [eV]',EGP)
+    call write_real(id2,'DEGP - total energy of prompt gamma rays uncertainty [eV]',DEGP)
+    call write_real(id2,'EGD - total energy of delayed gamma rays [eV]',EGD)
+    call write_real(id2,'DEGD - total energy of delayed gamma rays uncertainty [eV]',DEGD)
+    call write_real(id2,'EBDEL - total energy of delayed betas [eV]',EBDEL)
+    call write_real(id2,'DEBDEL - total energy of delayed betas uncertainty [eV]',DEBDEL)
+    call write_real(id2,'ENU - total energy of neutrinos [eV]',ENU)
+    call write_real(id2,'DENU - total energy of neutrinos uncertainty [eV]',DENU)
+    call write_real(id2,'ERN - total energy - energy of neutrinos [eV]',ERN)
+    call write_real(id2,'DERN - total energy - energy of neutrinos uncertainty [eV]',DERN)
   endif
   close (1)
 end subroutine writenu

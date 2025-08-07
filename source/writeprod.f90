@@ -10,7 +10,7 @@ subroutine writeprod(type)
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -27,9 +27,13 @@ subroutine writeprod(type)
   integer            :: L 
   integer            :: Ncol
   integer            :: nen
+  integer            :: indent
+  integer            :: id2
 !
 ! *** Write cross sections
 !
+  indent = 0
+  id2 = indent + 2
   MF = 3
   col(1)='E'
   un(1)='MeV'
@@ -51,11 +55,12 @@ subroutine writeprod(type)
   reaction=MTreac(MT,-1)
   topline=trim(targetnuclide)//trim(reaction)//' '//trim(quantity)
   open (unit = 1, status = 'unknown', file = endffile)
-  call write_header(topline,source,user,date,oformat)
-  call write_endf(2,library,author,year)
-  call write_target
-  call write_reaction(reaction,0.D0,0.D0,MF,MT)
-  call write_datablock(quantity,Ncol,Nprod(type),col,un)
+  call write_header(indent,topline,source,user,date,oformat)
+  call write_endf(id2,library,author,year)
+  call write_target(indent)
+  call write_reaction(indent,reaction,0.D0,0.D0,MF,MT)
+  call write_quantity(indent,quantity)
+  call write_datablock(indent,Ncol,Nprod(type),col,un)
   do nen = 1, Nprod(type)
     write(1, '(2es15.6)') Eprod(type,nen), xsprod(type,nen)
   enddo

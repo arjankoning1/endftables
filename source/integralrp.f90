@@ -10,7 +10,7 @@ subroutine integralrp(k)
 !
 ! *** Use data from other modules
 !
-  use endftables_mod
+  use A0_endftables_mod
 !
 ! *** Declaration of local data
 !
@@ -34,6 +34,8 @@ subroutine integralrp(k)
   integer            :: Ncol
   integer            :: nen0
   integer            :: nen
+  integer            :: indent
+  integer            :: id2
   real(sgl)          :: Ea1
   real(sgl)          :: Eb1
   real(sgl)          :: xsa
@@ -46,6 +48,8 @@ subroutine integralrp(k)
 !
 ! Interpolate cross section grid on the grid of the integral spectrum
 !
+  indent = 0
+  id2 = indent + 2
   MF = 6
   sacs = 0.
   do i = 1, Nspectrum
@@ -93,12 +97,13 @@ subroutine integralrp(k)
   reaction='('//proj//',x)'
   topline=trim(targetnuclide)//trim(reaction)//trim(finalnuclide)//' '//trim(quantity)
   open (unit = 1, status = 'unknown', file = endffile)
-  call write_header(topline,source,user,date,oformat)
-  call write_endf(2,library,author,year)
-  call write_target
-  call write_reaction(reaction,0.D0,0.D0,MF,MT)
-  call write_residual(Z,A,finalnuclide)
-  call write_datablock(quantity,Ncol,Nspectrum,col,un)
+  call write_header(indent,topline,source,user,date,oformat)
+  call write_endf(id2,library,author,year)
+  call write_target(indent)
+  call write_reaction(indent,reaction,0.D0,0.D0,MF,MT)
+  call write_residual(id2,Z,A,finalnuclide)
+  call write_quantity(id2,quantity)
+  call write_datablock(id2,Ncol,Nspectrum,col,un)
   do i = 1, Nspectrum
     write(1, '(a30, es15.6)') spectrum(i), sacs(i)
   enddo

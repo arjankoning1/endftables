@@ -29,12 +29,6 @@ tar zxf endftables.tar
 ```
 git clone https://github.com/arjankoning1/endftables.git
 ```
-The ENDFTABLES sample case does not fall under the git repository. For that you need to download:
-```
-https://nds.iaea.org/talys/samples/endftables_samples.tar
-tar zxf endftables_samples.tar
-```
-The resulting *samples/* directory should be moved inside the *endftables/* directory.
 ### Installation instructions :
 
 To install ENDFTABLES, you can use one of the following options:

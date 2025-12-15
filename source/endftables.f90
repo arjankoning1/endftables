@@ -1,22 +1,23 @@
 program endftables
 !
 !-----------------------------------------------------------------------------------------------------------------------------------
-! Purpose: Translate ENDF-6 file into x-y tables
+! Purpose   : Translate ENDF-6 file into x-y tables
 !
-! Revision    Date      Author           Description
-! ====================================================
-!    1     2025-12-01   A.J. Koning      Original code
+! Author    : Arjan Koning
+!
+! 2025-12-09: Current revision
 !-----------------------------------------------------------------------------------------------------------------------------------
 !
 !   |-------------------------------------------------------|
+!   |                 ENDFTABLES-2.2                        |
 !   |                 Arjan Koning                          |
 !   |                                                       |
-!   | Email: A.Koning@@iaea.org                             |
+!   | Email: A.Koning@iaea.org                              |
 !   |-------------------------------------------------------|
 !
 ! MIT License
 !
-! Copyright (c) 2024 Arjan Koning
+! Copyright (c) 2025 Arjan Koning
 !
 ! Permission is hereby granted, free of charge, to any person obtaining a copy
 ! of this software and associated documentation files (the "Software"), to deal
@@ -145,4 +146,6 @@ program endftables
   enddo
   call residual
   call production
-end
+end program endftables
+! Copyright A.J. Koning 2025
+

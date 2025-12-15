@@ -19,7 +19,7 @@ The following are the prerequisites for compiling ENDFTABLES:
 ### Downloads:
 
 To download ENDFTABLES, you can use one of the following options:
-#### 1. Download the tar file (frozen version):
+#### 1. Download the tar file (frozen version ENDFTABLES-2.2):
 ```
 https://nds.iaea.org/talys/endftables.tar
 tar zxf endftables.tar

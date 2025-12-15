@@ -1,0 +1,19 @@
+#!/bin/bash
+echo
+echo "     verify (Version December 1 2023) (C) Copyright 2023 Arjan Koning All Rights Reserved"
+echo
+#
+# verify: run ENDFTABLES for each sample case present in the new/ directories and determine
+#
+# Examples: verify     (run all sample cases)"
+#
+#
+# ENDFTABLES executable: Relative path from the current directory endftables/samples.  
+#
+cwd=`pwd`
+endftables=${cwd}/../bin/endftables
+#
+#
+#
+cd new
+$endftables n-U238.endfb8.1

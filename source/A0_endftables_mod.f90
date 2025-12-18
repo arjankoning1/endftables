@@ -5,7 +5,7 @@ module A0_endftables_mod
 !
 ! Revision    Date      Author           Description
 ! ====================================================
-!    1     2025-12-09   A.J. Koning      Original code
+!    1     2025-12-18   A.J. Koning      Original code
 !-----------------------------------------------------------------------------------------------------------------------------------
 !
   implicit none

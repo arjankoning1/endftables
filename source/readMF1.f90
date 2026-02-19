@@ -32,6 +32,7 @@ subroutine readMF1(line,Nlines,MT)
   integer            :: L
   integer            :: j
   integer            :: yy
+  integer            :: NSUB
   real               :: ZA
   real               :: AWI
   real               :: x(3*Nlines)
@@ -45,6 +46,7 @@ subroutine readMF1(line,Nlines,MT)
     read(line(2)(23:44), '(2i11)') LIS,LISO
     read(line(3)(1:11), '(es11.6)') AWI
     read(line(3)(12:22), '(es11.6)') EMAX
+    read(line(3)(45:55), '(i11)') NSUB
     read(line(5)(23:32), '(a10)') EDATE
     read(line(5)(34:66), '(a33)') author
     read(line(7)(5:14), '(a10)') libf
@@ -68,15 +70,21 @@ subroutine readMF1(line,Nlines,MT)
     targetnuclide = trim(El)// trim(adjustl(massstring)) // trim(Lisochar)
     eps=1.e-4
     k0=1
-    if (abs(AWI).le.eps) k0=0
-    if (abs(AWI-0.998623).le.eps) k0=2
-    if (abs(AWI-0.999142).le.eps) k0=2
-    if (abs(AWI-0.999170).le.eps) k0=2
-    if (abs(AWI-1.996256).le.eps) k0=3
-    if (abs(AWI-2.989596).le.eps) k0=4
-    if (abs(AWI-2.989033).le.eps) k0=5
-    if (abs(AWI-3.967131).le.eps) k0=6
-    if (abs(AWI-3.968220).le.eps) k0=6
+    if (NSUB == 0) k0=0
+    if (NSUB == 10010) k0=2
+    if (NSUB == 10020) k0=3
+    if (NSUB == 10030) k0=4
+    if (NSUB == 20030) k0=5
+    if (NSUB == 20040) k0=6
+!   if (abs(AWI).le.eps) k0=0
+!   if (abs(AWI-0.998623).le.eps) k0=2
+!   if (abs(AWI-0.999142).le.eps) k0=2
+!   if (abs(AWI-0.999170).le.eps) k0=2
+!   if (abs(AWI-1.996256).le.eps) k0=3
+!   if (abs(AWI-2.989596).le.eps) k0=4
+!   if (abs(AWI-2.989033).le.eps) k0=5
+!   if (abs(AWI-3.967131).le.eps) k0=6
+!   if (abs(AWI-3.968220).le.eps) k0=6
     proj = parsym(k0)
     ZCN = Ztarget + parZ(k0)
     NCN = Ntarget + parN(k0)

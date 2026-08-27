@@ -1,45 +1,50 @@
-# This file is part of ENDFTABLES
-# 
-#    Author: Arjan Koning Copyright: (C) 2024
+# ENDFTABLES Makefile
 #
-# ENDFTABLES is free software; you can redistribute it and/or modify it
-# under the terms of the MIT License; see LICENSE file for more details.
+# Examples:
 #
-# Basic installation (verified with the sample cases)
-#
-# FC="gfortran " FFLAGS=" "
-#
-# Distribution FC & FFLAGS (options provided by J-C Sublet)
-#
-# FC="gfortran " FFLAGS=" -Ofast "
-# FC="ifort    " FFLAGS=" -Ofast "
-# FC="nagfor   " FFLAGS=" -w     "
-#
-# Development FC & FFLAGS  (options provided by J-C Sublet)
-#
-# FC="gfortran " FFLAGS=" -Wall -fcheck=all -Og -g -fbacktrace   "
-# FC="ifort    " FFLAGS=" -O0 -g -traceback -check all -debug all"
-# FC="nagfor   " FFLAGS=" -C=all -O0 -g -gline                   "
-#
-CWD = $(shell pwd)
-PREFIX ?= $(CWD)/../
+#   make
+#   make FC=gfortran FFLAGS="-w -O3 -ffp-contract=off"
+#   make FC=ifx FFLAGS="-O3"
+#   make clean
+#   make check
 
-FC = gfortran
-FFLAGS = -w
+# Compiler-specific flags can be supplied by the user.
+ifeq ($(origin FC), default)
+  FC = gfortran
+endif
 
-fsub = $(shell echo [A-z]*.f90)
-obj = $(fsub:.f=.o)
-src = $(fsub)
+ifeq ($(origin FFLAGS), undefined)
+  ifneq ($(findstring gfortran,$(FC)),)
+    FFLAGS = -w -O3 -ffp-contract=off
+  else
+    FFLAGS =
+  endif
+endif
 
-all: endftables install clean
+# Installation directories.
 
-endftables : $(obj)
-	$(FC) $(FFLAGS) -o  endftables  $(obj)
+ENDFTABLES_DIR := $(abspath ..)
+BIN_DIR        := $(ENDFTABLES_DIR)/bin
+TARGET         := $(BIN_DIR)/endftables
 
-install:
-	mkdir -p $(PREFIX)bin
-	mv endftables $(PREFIX)bin  
+# ENDFTABLES source files.
+
+SOURCES := $(sort $(wildcard *.f) $(wildcard *.f90))
+
+.PHONY: all install clean check
+
+all install: $(TARGET)
+
+$(TARGET): $(SOURCES)
+	@echo "Compiler: $(FC)"
+	@echo "Flags:    $(FFLAGS)"
+	@mkdir -p "$(BIN_DIR)"
+	$(FC) $(FFLAGS) -o "$(TARGET)" $(SOURCES)
+	@rm -f *.o *.mod
+	@echo "Installed: $(TARGET)"
 
 clean:
-	rm -f *.o *.mod
+	rm -f *.o *.mod endftables "$(TARGET)"
 
+check: all
+	cd "$(ENDFTABLES_DIR)/samples" && ./verify

@@ -6,6 +6,7 @@ subroutine input
 ! Revision    Date      Author           Description
 ! ====================================================
 !    1     2016-03-04   A.J. Koning      Original code
+!    2     2026-08-27   A.J. Koning      Runtime definition of user name
 !-----------------------------------------------------------------------------------------------------------------------------------
 !
 ! *** Use data from other modules
@@ -20,6 +21,9 @@ subroutine input
   character*80       :: key
   character*80       :: infile
   character*80       :: line
+  character*80       :: endftables_user
+  integer            :: envlen
+  integer            :: envstat
   integer            :: i
   integer            :: ix
   integer            :: j
@@ -43,8 +47,19 @@ subroutine input
     lib=trim(infile(i+1:80))
   endif
   source = 'ENDF'
-  user = 'Arjan Koning'
   oformat = 'YANDF-0.4'
+!
+! Set user name for output files. The preferred option is the
+! ENDFTABLES_USER environment variable. The input keyword "user" below
+! can override this value for an individual run.
+!
+  call get_environment_variable('ENDFTABLES_USER', endftables_user, length=envlen, status=envstat)
+  if (envstat == 0 .and. envlen > 0) then
+    user = trim(endftables_user)
+  else
+    user = 'Unknown User'
+  endif
+!
   open (unit=5,file=infile)
 !
 ! Read input

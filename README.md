@@ -26,6 +26,7 @@ ENDFTABLES does not require an external runtime database. The ENDF-6 file to be 
 
 #### 1. Download the tar file (frozen version ENDFTABLES-2.2)
 
+This is available at the the [TALYS page](https://nds.iaea.org/talys/), and can be downloaded by clicking on the download link or
 ```bash
 curl -LO https://nds.iaea.org/talys/codes/endftables.tar
 tar zxf endftables.tar

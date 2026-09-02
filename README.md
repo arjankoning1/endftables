@@ -16,31 +16,64 @@ A.J. Koning, D. Rochman, J.-Ch. Sublet, N. Dzysiuk, M. Fleming, and S. van der M
 
 The following are the prerequisites for compiling ENDFTABLES:
 
-- git (only if the package is downloaded via GitHub)
 - GNU make
 - a recent Fortran compiler, such as GNU Fortran (gfortran)
+- git, only when ENDFTABLES is downloaded using `git clone`
 
 ENDFTABLES does not require an external runtime database. The ENDF-6 file to be processed is supplied directly on the command line.
 
 ### Downloads
 
-#### 1. Download the tar file (frozen version ENDFTABLES-2.2)
+ENDFTABLES can be downloaded in one of the following ways.
 
-This is available at the the [TALYS page](https://nds.iaea.org/talys/), and can be retrieved by clicking on the download link or
+#### 1. Frozen version ENDFTABLES-2.2 (December 2025)
+
+The frozen ENDFTABLES-2.2 distribution is available from the [TALYS page](https://nds.iaea.org/talys/). It can be retrieved by clicking on the download link or with
+
 ```bash
 curl -LO https://nds.iaea.org/talys/codes/endftables.tar
 tar zxf endftables.tar
 ```
 
-#### 2. Using git (latest beta version)
+This version is fixed and will not change.
+
+#### 2. Latest beta version without git
+
+Users who do not have git can download a snapshot of the current `main` branch directly from GitHub:
+
+```bash
+curl -L \
+  -o endftables-main.tar.gz \
+  https://github.com/arjankoning1/endftables/archive/refs/heads/main.tar.gz
+
+tar zxf endftables-main.tar.gz
+mv endftables-main endftables
+```
+
+This produces the same `endftables/` directory structure as the git version, but without the git history.
+
+The downloaded snapshot contains the latest version of the `main` branch at the time of download. To obtain a newer version later, download the snapshot again.
+
+#### 3. Latest beta version using git
+
+Users with git can clone the repository with
 
 ```bash
 git clone https://github.com/arjankoning1/endftables.git
 ```
 
+The advantage of this method is that the local ENDFTABLES installation can subsequently be updated with
+
+```bash
+cd endftables
+git pull --ff-only
+```
+
 ### Installation instructions
 
-#### 1. For the tar file (frozen version ENDFTABLES-2.2)
+#### 1. Frozen version ENDFTABLES-2.2
+
+For the frozen tar distribution:
 
 ```bash
 cd endftables
@@ -56,10 +89,13 @@ make
 
 The frozen distribution retains its own installation scripts and settings.
 
-#### 2. For the git version (latest beta version)
+#### 2. Latest beta version
+
+The installation procedure is identical whether the latest beta version was obtained as a GitHub tar snapshot or using `git clone`.
+
+From the `endftables/` directory, run
 
 ```bash
-cd endftables
 ./install_endftables.bash
 ```
 
@@ -72,7 +108,13 @@ cd endftables/source
 make
 ```
 
-For the git version, the default compiler is `gfortran`. When `gfortran` is used and no `FFLAGS` are supplied, the Makefile uses:
+The executable is installed as
+
+```text
+endftables/bin/endftables
+```
+
+For the latest beta version, the default compiler is `gfortran`. When `gfortran` is used and no `FFLAGS` are supplied, the Makefile uses:
 
 ```text
 -w -O3 -ffp-contract=off
@@ -83,14 +125,11 @@ For other compilers, no default compiler flags are imposed.
 Compiler and compilation options can be passed through `install_endftables.bash`, for example:
 
 ```bash
+# GNU Fortran
 ./install_endftables.bash FC=gfortran FFLAGS="-O3 -ffp-contract=off"
+
+# Intel Fortran
 ./install_endftables.bash FC=ifx FFLAGS="-O3"
-```
-
-The executable is installed as:
-
-```text
-endftables/bin/endftables
 ```
 
 If you want to run `endftables` from anywhere, add its `bin` directory to `PATH`, for example:
@@ -110,8 +149,6 @@ The `user` input keyword can override `ENDFTABLES_USER` for an individual run.
 These lines can be added to `~/.zshrc` or `~/.profile`.
 
 Unlike TALYS, TEFAL, TASMAN, ISOTOPIA and RESONANCETABLES, ENDFTABLES does **not** need an `ENDFTABLES_DIR` runtime environment variable or a `machine.f90`: it reads the input ENDF-6 file directly from the command line and has no package-relative runtime data files.
-
-For the modern git version, `code_build.bash` is no longer required and can be removed after adopting the new installer and Makefile. The stale reference to `path_change.bash` in the old installer is also removed.
 
 ## Sample case
 
